@@ -11,6 +11,11 @@ except Exception as e:              # Python 3
 
 from auth import FHIRAuth
 
+#FHIRJSONMimeType = 'application/fhir+json'
+FHIRJSONMimeType = 'application/json' #use if EPIC
+
+logger = logging.getLogger(__name__)
+
 
 class FHIRUnauthorizedException(Exception):
     """ Indicating a 401 response.
@@ -170,7 +175,7 @@ class FHIRServer(object):
         url = urlparse.urljoin(self.base_uri, path)
         
         headers = {
-            'Accept': 'application/json+fhir',
+            'Accept': FHIRJSONMimeType,
             'Accept-Charset': 'UTF-8',
         }
         if not nosign and self.auth is not None and self.auth.can_sign_headers():
